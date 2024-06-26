@@ -1,17 +1,39 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React, {Component} from "react";
+import ReactDOM from 'react-dom';
+import AppFooter from "./AppFooter";
+import AppContent from "./AppContent";
+import AppHeader from './AppHeader'
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+import './index.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+class App extends Component {
+
+    constructor(props) {
+        super(props)
+        this.handlePostChange = this.handlePostChange.bind(this)
+        this.state = {posts: []}
+    }
+
+    handlePostChange(posts) {
+        this.setState({posts: posts})
+    }
+
+    render() {
+        const myProps = {
+            title: "My cool app !",
+            subject: "what is the subject today",
+            favorite_color: "blue",
+        }
+
+        return (
+        <div className="app">
+            <AppHeader {...myProps} posts={this.state.posts} handlePostChange={this.handlePostChange}/>
+            <AppContent handlePostChange={this.handlePostChange}/> 
+            <AppFooter />
+        </div>
+        );
+    }
+}
+
+ReactDOM.render(<App />, document.getElementById('root'))
